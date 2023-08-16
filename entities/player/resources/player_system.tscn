@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://c541eexhog3da"]
+
+[ext_resource type="Script" path="res://entities/player/scripts/player_movement.gd" id="1_j4ciu"]
+[ext_resource type="Texture2D" uid="uid://bbe4hdnoq31om" path="res://entities/player/media/characters.png" id="2_nkqeo"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bfc74"]
+radius = 6.0
+height = 22.0
+
+[node name="PlayerSystem" type="Node2D"]
+
+[node name="Player" type="CharacterBody2D" parent="."]
+script = ExtResource("1_j4ciu")
+speed = 100.0
+jump_velocity = -300.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture = ExtResource("2_nkqeo")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(0.136856, 0.418842, 23.8631, 23.5812)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("CapsuleShape2D_bfc74")
+debug_color = Color(1, 0, 1, 0.392157)

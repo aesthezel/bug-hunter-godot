@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://bsa2sv88ni6dq"]
+
+[ext_resource type="TileSet" uid="uid://dos5llc3r55r0" path="res://levels/settings/kenney_levels_tileset.tres" id="1_g7gp5"]
+[ext_resource type="PackedScene" uid="uid://cdsdqakqwtet" path="res://services/camera/resources/camera_system.tscn" id="2_njk1c"]
+[ext_resource type="PackedScene" uid="uid://c541eexhog3da" path="res://entities/player/resources/player_system.tscn" id="3_03fjg"]
+
+[node name="Level0" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("1_g7gp5")
+format = 2
+layer_0/tile_data = PackedInt32Array(131071, 131073, 0, 65536, 131073, 0, 65537, 131073, 0, 131070, 131073, 0, 65538, 196609, 0, 131069, 65537, 0, 65540, 1, 0, 65542, 65537, 0, 65543, 131073, 0, 65544, 196609, 0)
+
+[node name="CameraSystem" parent="." node_paths=PackedStringArray("camera", "target") instance=ExtResource("2_njk1c")]
+camera = NodePath("Camera2D")
+target = NodePath("../PlayerSystem/Player")
+
+[node name="PlayerSystem" parent="." instance=ExtResource("3_03fjg")]
+
+[node name="Player" parent="PlayerSystem" index="0" node_paths=PackedStringArray("sprite")]
+sprite = NodePath("Sprite2D")
+
+[editable path="CameraSystem"]
+[editable path="PlayerSystem"]
