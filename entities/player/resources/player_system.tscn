@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://c541eexhog3da"]
+[gd_scene load_steps=7 format=3 uid="uid://c541eexhog3da"]
 
 [ext_resource type="Script" path="res://entities/player/scripts/player_movement.gd" id="1_j4ciu"]
 [ext_resource type="Texture2D" uid="uid://bbe4hdnoq31om" path="res://entities/player/media/characters.png" id="2_nkqeo"]
 [ext_resource type="Script" path="res://entities/player/scripts/player_activator_ray.gd" id="3_gm1s0"]
+[ext_resource type="Script" path="res://entities/player/scripts/player_skill_spawner.gd" id="3_pfkxu"]
+[ext_resource type="PackedScene" uid="uid://d2uvd6a0uhmos" path="res://entities/player/resources/skill_stack_overflow.tscn" id="4_p1v6j"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bfc74"]
 radius = 6.0
@@ -10,8 +12,9 @@ height = 22.0
 
 [node name="PlayerSystem" type="Node2D"]
 
-[node name="Player" type="CharacterBody2D" parent="."]
+[node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("sprite")]
 script = ExtResource("1_j4ciu")
+sprite = NodePath("Sprite2D")
 speed = 100.0
 jump_velocity = -300.0
 
@@ -25,6 +28,17 @@ region_rect = Rect2(0.136856, 0.418842, 23.8631, 23.5812)
 shape = SubResource("CapsuleShape2D_bfc74")
 debug_color = Color(1, 0, 1, 0.392157)
 
-[node name="ActivatorRay" type="RayCast2D" parent="Player"]
+[node name="PlayerSkillSpawner" type="Node2D" parent="Player" node_paths=PackedStringArray("activator_ray", "input_timer")]
+script = ExtResource("3_pfkxu")
+activator_ray = NodePath("../ActivatorRay")
+skill_stack_overflow_packed = ExtResource("4_p1v6j")
+input_timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="Player/PlayerSkillSpawner"]
+
+[node name="ActivatorRay" type="RayCast2D" parent="Player" node_paths=PackedStringArray("sleep_timer")]
 target_position = Vector2(20, 0)
 script = ExtResource("3_gm1s0")
+sleep_timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="Player/ActivatorRay"]
