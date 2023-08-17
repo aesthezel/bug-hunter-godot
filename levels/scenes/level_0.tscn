@@ -5,20 +5,27 @@
 [ext_resource type="PackedScene" uid="uid://c541eexhog3da" path="res://entities/player/resources/player_system.tscn" id="3_03fjg"]
 
 [node name="Level0" type="Node2D"]
+position = Vector2(1, 0)
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("1_g7gp5")
 format = 2
-layer_0/tile_data = PackedInt32Array(131071, 131073, 0, 65536, 131073, 0, 65537, 131073, 0, 131070, 131073, 0, 65538, 196609, 0, 131069, 65537, 0, 65540, 1, 0, 65542, 65537, 0, 65543, 131073, 0, 65544, 196609, 0)
+layer_0/tile_data = PackedInt32Array(131071, 131073, 0, 65536, 131073, 0, 65537, 131073, 0, 131070, 131073, 0, 65538, 196609, 0, 131069, 131073, 0, 65540, 1, 0, 65542, 65537, 0, 65543, 131073, 0, 65544, 196609, 0, 131068, 65537, 0, 65546, 131073, 1, 131082, 131073, 6, 196618, 131073, 6, 65547, 131073, 1, 131083, 131073, 6, 196619, 131073, 6, 65548, 131073, 1, 131084, 131073, 6, 196620, 131073, 6, 65549, 131073, 1, 131085, 131073, 6, 196621, 131073, 6, 65550, 131073, 1, 131086, 131073, 6, 196622, 131073, 6, 65551, 131073, 1, 131087, 131073, 6, 196623, 131073, 6, 65552, 131073, 1, 131088, 131073, 6, 196624, 131073, 6, 262154, 131073, 6, 327690, 131073, 6, 262155, 131073, 6, 327691, 131073, 6, 262156, 131073, 6, 327692, 131073, 6, 262157, 131073, 6, 327693, 131073, 6, 262158, 131073, 6, 327694, 131073, 6, 262159, 131073, 6, 327695, 131073, 6, 262160, 131073, 6, 327696, 131073, 6, 65553, 131073, 1, 131089, 131073, 6, 196625, 131073, 6, 262161, 131073, 6, 327697, 131073, 6, 65554, 131073, 1, 131090, 131073, 6, 196626, 131073, 6, 262162, 131073, 6, 327698, 131073, 6, 65555, 131073, 1, 131091, 131073, 6, 196627, 131073, 6, 262163, 131073, 6, 327699, 131073, 6, 65556, 131073, 1, 131092, 131073, 6, 196628, 131073, 6, 262164, 131073, 6, 327700, 131073, 6, 65557, 131073, 1, 131093, 131073, 6, 196629, 131073, 6, 262165, 131073, 6, 327701, 131073, 6, 65558, 131073, 1, 131094, 131073, 6, 196630, 131073, 6, 262166, 131073, 6, 327702, 131073, 6, 7, 524289, 4)
+
+[node name="PlayerSystem" parent="." instance=ExtResource("3_03fjg")]
+position = Vector2(19, 1)
+
+[node name="Player" parent="PlayerSystem" index="0" node_paths=PackedStringArray("sprite")]
+position = Vector2(-59, 0)
+sprite = NodePath("Sprite2D")
+
+[node name="ActivatorRay" parent="PlayerSystem/Player" index="2"]
+rayDistance = 20.0
 
 [node name="CameraSystem" parent="." node_paths=PackedStringArray("camera", "target") instance=ExtResource("2_njk1c")]
 camera = NodePath("Camera2D")
 target = NodePath("../PlayerSystem/Player")
+follow_speed = 1000.0
 
-[node name="PlayerSystem" parent="." instance=ExtResource("3_03fjg")]
-
-[node name="Player" parent="PlayerSystem" index="0" node_paths=PackedStringArray("sprite")]
-sprite = NodePath("Sprite2D")
-
-[editable path="CameraSystem"]
 [editable path="PlayerSystem"]
+[editable path="CameraSystem"]
