@@ -13,6 +13,7 @@ height = 22.0
 [node name="PlayerSystem" type="Node2D"]
 
 [node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("sprite")]
+collision_layer = 7
 script = ExtResource("1_j4ciu")
 sprite = NodePath("Sprite2D")
 speed = 100.0
