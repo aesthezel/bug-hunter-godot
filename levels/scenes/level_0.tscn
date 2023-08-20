@@ -27,9 +27,9 @@ target = NodePath("../PlayerSystem/Player")
 follow_speed = 1000.0
 
 [node name="PlayerSystem" parent="." instance=ExtResource("3_03fjg")]
+position = Vector2(-48, 0)
 
 [node name="Player" parent="PlayerSystem" index="0"]
-position = Vector2(-65, 0)
 scale = Vector2(1.5, 1.5)
 
 [node name="PlayerSkillSpawner" parent="PlayerSystem/Player" index="2"]
