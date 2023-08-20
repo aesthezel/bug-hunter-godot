@@ -1,13 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://bsa2sv88ni6dq"]
+[gd_scene load_steps=9 format=3 uid="uid://bsa2sv88ni6dq"]
 
 [ext_resource type="TileSet" uid="uid://dos5llc3r55r0" path="res://levels/settings/kenney_levels_tileset.tres" id="1_g7gp5"]
 [ext_resource type="PackedScene" uid="uid://cdsdqakqwtet" path="res://services/camera/resources/camera_system.tscn" id="2_njk1c"]
 [ext_resource type="PackedScene" uid="uid://c541eexhog3da" path="res://entities/player/resources/player_system.tscn" id="3_03fjg"]
 [ext_resource type="Script" path="res://entities/player/scripts/player_skill_frame_jump.gd" id="4_6ubsi"]
 [ext_resource type="Texture2D" uid="uid://yk4s7r21p0i2" path="res://levels/media/tiles.png" id="5_345hu"]
+[ext_resource type="Texture2D" uid="uid://bbe4hdnoq31om" path="res://entities/player/media/characters.png" id="6_3mef7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bhlg3"]
 size = Vector2(8, 58)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hnlgu"]
+size = Vector2(10, 15)
 
 [node name="Level0" type="Node2D"]
 position = Vector2(1, 0)
@@ -26,12 +30,13 @@ follow_speed = 1000.0
 
 [node name="Player" parent="PlayerSystem" index="0"]
 position = Vector2(-65, 0)
+scale = Vector2(1.5, 1.5)
 
 [node name="PlayerSkillSpawner" parent="PlayerSystem/Player" index="2"]
 instance_offset = Vector2(10, 0)
 
 [node name="ActivatorRay" parent="PlayerSystem/Player" index="3"]
-collision_mask = 8
+collision_mask = 16
 
 [node name="FrameJumpHorizontal" type="RayCast2D" parent="PlayerSystem/Player" index="4" node_paths=PackedStringArray("player_transform", "player_collider")]
 target_position = Vector2(50, 0)
@@ -70,6 +75,20 @@ collision_layer = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2/StaticBody2D"]
 shape = SubResource("RectangleShape2D_bhlg3")
+
+[node name="EnemyJumper" type="RigidBody2D" parent="."]
+position = Vector2(341, 8)
+collision_layer = 4
+collision_mask = 19
+
+[node name="Sprite2D" type="Sprite2D" parent="EnemyJumper"]
+texture = ExtResource("6_3mef7")
+region_enabled = true
+region_rect = Rect2(156, 26, 24, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyJumper"]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_hnlgu")
 
 [editable path="CameraSystem"]
 [editable path="PlayerSystem"]
