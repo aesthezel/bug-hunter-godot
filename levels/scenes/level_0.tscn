@@ -1,8 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://bsa2sv88ni6dq"]
+[gd_scene load_steps=9 format=3 uid="uid://bsa2sv88ni6dq"]
 
 [ext_resource type="TileSet" uid="uid://dos5llc3r55r0" path="res://levels/settings/kenney_levels_tileset.tres" id="1_g7gp5"]
 [ext_resource type="PackedScene" uid="uid://cdsdqakqwtet" path="res://services/camera/resources/camera_system.tscn" id="2_njk1c"]
 [ext_resource type="PackedScene" uid="uid://c541eexhog3da" path="res://entities/player/resources/player_system.tscn" id="3_03fjg"]
+[ext_resource type="Script" path="res://entities/player/scripts/player_skill_frame_jump.gd" id="4_6ubsi"]
+[ext_resource type="Texture2D" uid="uid://yk4s7r21p0i2" path="res://levels/media/tiles.png" id="5_345hu"]
+[ext_resource type="Texture2D" uid="uid://bbe4hdnoq31om" path="res://entities/player/media/characters.png" id="6_3mef7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bhlg3"]
+size = Vector2(8, 58)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hnlgu"]
+size = Vector2(10, 15)
 
 [node name="Level0" type="Node2D"]
 position = Vector2(1, 0)
@@ -10,7 +19,7 @@ position = Vector2(1, 0)
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("1_g7gp5")
 format = 2
-layer_0/tile_data = PackedInt32Array(131071, 131073, 0, 65536, 131073, 0, 65537, 131073, 0, 131070, 131073, 0, 65538, 196609, 0, 131069, 131073, 0, 65540, 1, 0, 65542, 65537, 0, 65543, 131073, 0, 65544, 196609, 0, 131068, 65537, 0, 65546, 131073, 1, 131082, 131073, 6, 196618, 131073, 6, 65547, 131073, 1, 131083, 131073, 6, 196619, 131073, 6, 65548, 131073, 1, 131084, 131073, 6, 196620, 131073, 6, 65549, 131073, 1, 131085, 131073, 6, 196621, 131073, 6, 65550, 131073, 1, 131086, 131073, 6, 196622, 131073, 6, 65551, 131073, 1, 131087, 131073, 6, 196623, 131073, 6, 65552, 131073, 1, 131088, 131073, 6, 196624, 131073, 6, 262154, 131073, 6, 327690, 131073, 6, 262155, 131073, 6, 327691, 131073, 6, 262156, 131073, 6, 327692, 131073, 6, 262157, 131073, 6, 327693, 131073, 6, 262158, 131073, 6, 327694, 131073, 6, 262159, 131073, 6, 327695, 131073, 6, 262160, 131073, 6, 327696, 131073, 6, 65553, 131073, 1, 131089, 131073, 6, 196625, 131073, 6, 262161, 131073, 6, 327697, 131073, 6, 65554, 131073, 1, 131090, 131073, 6, 196626, 131073, 6, 262162, 131073, 6, 327698, 131073, 6, 65555, 131073, 1, 131091, 131073, 6, 196627, 131073, 6, 262163, 131073, 6, 327699, 131073, 6, 65556, 131073, 1, 131092, 131073, 6, 196628, 131073, 6, 262164, 131073, 6, 327700, 131073, 6, 65557, 131073, 1, 131093, 131073, 6, 196629, 131073, 6, 262165, 131073, 6, 327701, 131073, 6, 65558, 131073, 1, 131094, 131073, 6, 196630, 131073, 6, 262166, 131073, 6, 327702, 131073, 6, 7, 524289, 4)
+layer_0/tile_data = PackedInt32Array(131071, 131073, 0, 65536, 131073, 0, 65537, 131073, 0, 131070, 131073, 0, 65538, 131073, 1, 131069, 131073, 0, 65540, 131073, 1, 65542, 131073, 1, 65543, 131073, 1, 65544, 196609, 1, 131068, 65537, 0, 65546, 131073, 1, 131082, 131073, 6, 196618, 131073, 6, 65547, 131073, 1, 131083, 131073, 6, 196619, 131073, 6, 65548, 131073, 1, 131084, 131073, 6, 196620, 131073, 6, 65549, 131073, 1, 131085, 131073, 6, 196621, 131073, 6, 65550, 131073, 1, 131086, 131073, 6, 196622, 131073, 6, 65551, 131073, 1, 131087, 131073, 6, 196623, 131073, 6, 65552, 131073, 1, 131088, 131073, 6, 196624, 131073, 6, 262154, 131073, 6, 327690, 131073, 6, 262155, 131073, 6, 327691, 131073, 6, 262156, 131073, 6, 327692, 131073, 6, 262157, 131073, 6, 327693, 131073, 6, 262158, 131073, 6, 327694, 131073, 6, 262159, 131073, 6, 327695, 131073, 6, 262160, 131073, 6, 327696, 131073, 6, 65553, 131073, 1, 131089, 131073, 6, 196625, 131073, 6, 262161, 131073, 6, 327697, 131073, 6, 65554, 131073, 1, 131090, 131073, 6, 196626, 131073, 6, 262162, 131073, 6, 327698, 131073, 6, 65555, 131073, 1, 131091, 131073, 6, 196627, 131073, 6, 262163, 131073, 6, 327699, 131073, 6, 65556, 131073, 1, 131092, 131073, 6, 196628, 131073, 6, 262164, 131073, 6, 327700, 131073, 6, 65557, 131073, 1, 131093, 131073, 6, 196629, 131073, 6, 262165, 131073, 6, 327701, 131073, 6, 65558, 131073, 1, 131094, 131073, 6, 196630, 131073, 6, 262166, 131073, 6, 327702, 131073, 6, 7, 524289, 4, 65539, 131073, 1, 65541, 131073, 1, 131074, 65537, 6, 131075, 131073, 6, 131076, 131073, 6, 131077, 131073, 6, 131078, 131073, 6, 131079, 131073, 6, 131080, 196609, 6, 196611, 131073, 7, 196612, 131073, 7, 196613, 131073, 7, 196614, 131073, 7, 196615, 131073, 7, 196616, 196609, 7, 196610, 65537, 7)
 
 [node name="CameraSystem" parent="." node_paths=PackedStringArray("camera", "target") instance=ExtResource("2_njk1c")]
 camera = NodePath("Camera2D")
@@ -18,9 +27,68 @@ target = NodePath("../PlayerSystem/Player")
 follow_speed = 1000.0
 
 [node name="PlayerSystem" parent="." instance=ExtResource("3_03fjg")]
+position = Vector2(-48, 0)
+
+[node name="Player" parent="PlayerSystem" index="0"]
+scale = Vector2(1.5, 1.5)
 
 [node name="PlayerSkillSpawner" parent="PlayerSystem/Player" index="2"]
 instance_offset = Vector2(10, 0)
+
+[node name="ActivatorRay" parent="PlayerSystem/Player" index="3"]
+collision_mask = 16
+
+[node name="FrameJumpHorizontal" type="RayCast2D" parent="PlayerSystem/Player" index="4" node_paths=PackedStringArray("player_transform", "player_collider")]
+target_position = Vector2(50, 0)
+script = ExtResource("4_6ubsi")
+player_transform = NodePath("..")
+player_collider = NodePath("../CollisionShape2D")
+
+[node name="FrameJumpVertical" type="RayCast2D" parent="PlayerSystem/Player" index="5" node_paths=PackedStringArray("player_transform", "player_collider")]
+target_position = Vector2(0, -50)
+script = ExtResource("4_6ubsi")
+ray_type = 1
+player_transform = NodePath("..")
+player_collider = NodePath("../CollisionShape2D")
+
+[node name="Wall" type="Sprite2D" parent="."]
+position = Vector2(33, -10)
+texture = ExtResource("5_345hu")
+region_enabled = true
+region_rect = Rect2(240, 20, 18, 58)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Wall"]
+collision_layer = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall/StaticBody2D"]
+shape = SubResource("RectangleShape2D_bhlg3")
+
+[node name="Wall2" type="Sprite2D" parent="."]
+position = Vector2(-2, -31)
+rotation = -1.5708
+texture = ExtResource("5_345hu")
+region_enabled = true
+region_rect = Rect2(240, 20, 18, 58)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Wall2"]
+collision_layer = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2/StaticBody2D"]
+shape = SubResource("RectangleShape2D_bhlg3")
+
+[node name="EnemyJumper" type="RigidBody2D" parent="."]
+position = Vector2(341, 8)
+collision_layer = 4
+collision_mask = 19
+
+[node name="Sprite2D" type="Sprite2D" parent="EnemyJumper"]
+texture = ExtResource("6_3mef7")
+region_enabled = true
+region_rect = Rect2(156, 26, 24, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyJumper"]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_hnlgu")
 
 [editable path="CameraSystem"]
 [editable path="PlayerSystem"]
