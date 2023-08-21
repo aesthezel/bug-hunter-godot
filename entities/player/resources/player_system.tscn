@@ -22,7 +22,6 @@ jump_velocity = -300.0
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
 texture = ExtResource("2_26pr3")
-flip_h = true
 region_enabled = true
 region_rect = Rect2(0, 0, 16, 16)
 

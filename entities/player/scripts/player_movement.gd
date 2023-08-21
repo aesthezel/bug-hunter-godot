@@ -19,7 +19,7 @@ func perform_move():
 	var direction = Input.get_axis("move_left", "move_right")
 	if direction:
 		velocity.x = direction * speed
-		sprite.flip_h = true if velocity.x > 0 else false
+		sprite.flip_h = false if velocity.x > 0 else true
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 

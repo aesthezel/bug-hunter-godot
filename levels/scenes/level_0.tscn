@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bsa2sv88ni6dq"]
+[gd_scene load_steps=10 format=3 uid="uid://bsa2sv88ni6dq"]
 
 [ext_resource type="TileSet" uid="uid://dos5llc3r55r0" path="res://levels/settings/kenney_levels_tileset.tres" id="1_g7gp5"]
 [ext_resource type="PackedScene" uid="uid://cdsdqakqwtet" path="res://services/camera/resources/camera_system.tscn" id="2_njk1c"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://entities/player/scripts/player_skill_frame_jump.gd" id="4_6ubsi"]
 [ext_resource type="Texture2D" uid="uid://yk4s7r21p0i2" path="res://levels/media/tiles.png" id="5_345hu"]
 [ext_resource type="Texture2D" uid="uid://bbe4hdnoq31om" path="res://entities/player/media/characters.png" id="6_3mef7"]
+[ext_resource type="Script" path="res://entities/enemy/scripts/enemy_jumper.gd" id="6_pf3mf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bhlg3"]
 size = Vector2(8, 58)
@@ -28,9 +29,6 @@ follow_speed = 1000.0
 
 [node name="PlayerSystem" parent="." instance=ExtResource("3_03fjg")]
 position = Vector2(-48, 0)
-
-[node name="Player" parent="PlayerSystem" index="0"]
-scale = Vector2(1.5, 1.5)
 
 [node name="PlayerSkillSpawner" parent="PlayerSystem/Player" index="2"]
 instance_offset = Vector2(10, 0)
@@ -76,10 +74,19 @@ collision_layer = 7
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2/StaticBody2D"]
 shape = SubResource("RectangleShape2D_bhlg3")
 
-[node name="EnemyJumper" type="RigidBody2D" parent="."]
+[node name="EnemyJumper" type="CharacterBody2D" parent="." node_paths=PackedStringArray("jump_wait_timer")]
 position = Vector2(341, 8)
 collision_layer = 4
 collision_mask = 19
+platform_on_leave = 1
+script = ExtResource("6_pf3mf")
+jump_height = 50.0
+jump_distance = 50.0
+jump_velocity = Vector2(-200, -400)
+jump_wait_timer = NodePath("JumpWait")
+
+[node name="JumpWait" type="Timer" parent="EnemyJumper"]
+one_shot = true
 
 [node name="Sprite2D" type="Sprite2D" parent="EnemyJumper"]
 texture = ExtResource("6_3mef7")
