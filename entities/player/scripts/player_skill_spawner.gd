@@ -25,7 +25,7 @@ func _process(delta):
 		instance_offset.x = abs(instance_offset.x)
 	
 	if _can_input:
-		if Input.is_action_just_pressed("attack") and !activator_ray.is_colliding():
+		if Input.is_action_just_pressed("skill_one") and !activator_ray.is_colliding():
 			disable_input(input_disabled_time)
 			activator_ray.sleep_ray(input_disabled_time)
 			

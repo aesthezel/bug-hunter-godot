@@ -12,6 +12,20 @@ func sleep_ray(time : float):
 func wake_ray():
 	sleeping = false
 
+func checking_stack_overflow(collider):
+	var stack_overflow = collider as SkillStackOverflow # Preguntar si el objeto es de este tipo
+		
+	if stack_overflow != null:
+			stack_overflow.activate_skill(target_position.x)
+
+func checking_enemy(collider):
+	var enemy = collider as Enemy
+	
+	print(enemy)
+	if enemy != null:
+		var complete_enemy = enemy.get_exact_type(enemy)
+		complete_enemy.set_life(-1)
+
 func _ready():
 	sleep_timer.timeout.connect(wake_ray)
 
@@ -22,7 +36,10 @@ func _process(delta):
 		target_position = Vector2(-ray_distance, 0.0) if horizontal_direction < 0 else Vector2(ray_distance, 0.0)
 		
 	if is_colliding() and !sleeping:
-		var stackOverFlow = get_collider() as SkillStackOverflow # Preguntar si el objeto es de este tipo
-		if stackOverFlow != null:
-			if Input.is_action_just_pressed("attack"):
-				stackOverFlow.activate_skill(target_position.x)
+		var object_collided = get_collider()
+		
+		if Input.is_action_just_pressed("skill_one"):
+			checking_stack_overflow(object_collided)
+		
+		if Input.is_action_just_pressed("scan"):
+			checking_enemy(object_collided)

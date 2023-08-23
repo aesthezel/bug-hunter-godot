@@ -16,14 +16,21 @@ enum FrameJumpDirection {
 @export var player_collider : CollisionShape2D
 @export var ray_distance : float = 50.0
 @export var min_possible_distance : float = 7
+@export var frame_jump_timer : Timer
+@export var can_use_time : float
 
 var ray_direction : FrameJumpDirection = FrameJumpDirection.POSITIVE
 
-var canCross : bool
+var can_cross : bool
+var can_use : bool
+
+func reset_can_use():
+	can_use = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print(player_transform.global_scale)
+	can_use = true
+	frame_jump_timer.timeout.connect(reset_can_use)
 
 func get_ray_direction() -> FrameJumpDirection:
 	if ray_type == FrameJumpType.HORIZONTAL:
@@ -40,7 +47,7 @@ func get_ray_direction() -> FrameJumpDirection:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	canCross = true
+	can_cross = true
 	
 	var possible_direction = get_ray_direction()
 	if possible_direction != FrameJumpDirection.NEUTRAL:
@@ -48,20 +55,26 @@ func _process(delta):
 	
 	target_position = Vector2(ray_distance * ray_direction, 0.0)
 	
-	var finalRayDistance = ray_distance
+	var final_ray_distance = ray_distance
 	
 	if is_colliding():
 		var collisionPosition = get_collision_point()
 		var distanceCollision = collisionPosition - player_collider.global_position
-		finalRayDistance = abs(distanceCollision.x - ray_distance)
+		final_ray_distance = abs(distanceCollision.x - ray_distance)
 		
-		if finalRayDistance < min_possible_distance:
-			canCross = false
+		if final_ray_distance < min_possible_distance:
+			can_cross = false
 		else:
-			canCross = true
+			can_cross = true
+	
+	if !can_use:
+		return
 		
-	if Input.is_action_just_pressed("dash") and canCross:
+	if Input.is_action_just_pressed("skill_two") and can_cross:
 		if ray_type == FrameJumpType.HORIZONTAL and Input.get_axis("move_left", "move_right") != 0:
-			player_transform.position.x += finalRayDistance * ray_direction
+			player_transform.position.x += final_ray_distance * ray_direction
 		elif ray_type == FrameJumpType.VERTICAL and Input.get_axis("move_down", "move_up") != 0:
-			player_transform.position.y += finalRayDistance * ray_direction
+			player_transform.position.y += final_ray_distance * ray_direction
+		
+		can_use = false
+		frame_jump_timer.start(can_use_time)

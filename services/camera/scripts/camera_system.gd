@@ -1,7 +1,7 @@
 class_name CameraSystem extends Node2D
 
 @export var camera : Camera2D
-@export var target : Node2D
+@export var player_system : PlayerSystem
 @export var follow_speed : float = 300.0
 @export var mass : float = 3.0
 
@@ -12,7 +12,7 @@ const SLOW_RADIUS : float = 300.0
 
 func move_camera_to_target(delta):
 	var camera_position = camera.position
-	var target_position = target.position
+	var target_position = player_system.player_movement.position
 	
 	var distance_to_target = camera_position.distance_to(target_position)
 	var desired_velocity = (target_position - camera_position).normalized() * follow_speed

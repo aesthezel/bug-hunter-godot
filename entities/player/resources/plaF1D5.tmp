@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://c541eexhog3da"]
+
+[ext_resource type="Script" path="res://entities/player/scripts/player_movement.gd" id="1_j4ciu"]
+[ext_resource type="Texture2D" uid="uid://bw0se3s7txju" path="res://entities/player/media/player.png" id="2_26pr3"]
+[ext_resource type="Script" path="res://entities/player/scripts/player_activator_ray.gd" id="3_gm1s0"]
+[ext_resource type="Script" path="res://entities/player/scripts/player_skill_spawner.gd" id="3_pfkxu"]
+[ext_resource type="PackedScene" uid="uid://d2uvd6a0uhmos" path="res://entities/player/resources/skill_stack_overflow.tscn" id="4_p1v6j"]
+[ext_resource type="Script" path="res://entities/player/scripts/player_skill_frame_jump.gd" id="6_8ns43"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bfc74"]
+radius = 6.0
+height = 14.0
+
+[node name="PlayerSystem" type="Node2D"]
+
+[node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("sprite")]
+collision_layer = 2
+collision_mask = 21
+script = ExtResource("1_j4ciu")
+sprite = NodePath("Sprite2D")
+speed = 100.0
+jump_velocity = -300.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture = ExtResource("2_26pr3")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("CapsuleShape2D_bfc74")
+debug_color = Color(1, 0, 1, 0.392157)
+
+[node name="PlayerSkillSpawner" type="Node2D" parent="Player" node_paths=PackedStringArray("activator_ray", "input_timer")]
+script = ExtResource("3_pfkxu")
+activator_ray = NodePath("../ActivatorRay")
+skill_stack_overflow_packed = ExtResource("4_p1v6j")
+input_timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="Player/PlayerSkillSpawner"]
+
+[node name="ActivatorRay" type="RayCast2D" parent="Player" node_paths=PackedStringArray("sleep_timer")]
+target_position = Vector2(20, 0)
+script = ExtResource("3_gm1s0")
+sleep_timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="Player/ActivatorRay"]
+
+[node name="FrameJumpHorizontal" type="RayCast2D" parent="." node_paths=PackedStringArray("player_transform", "player_collider")]
+target_position = Vector2(50, 0)
+script = ExtResource("6_8ns43")
+player_transform = NodePath("../Player")
+player_collider = NodePath("../Player/CollisionShape2D")
+
+[node name="FrameJumpVertical" type="RayCast2D" parent="." node_paths=PackedStringArray("player_transform", "player_collider")]
+target_position = Vector2(0, -50)
+script = ExtResource("6_8ns43")
+ray_type = 1
+player_transform = NodePath("../Player")
+player_collider = NodePath("../Player/CollisionShape2D")

@@ -7,6 +7,9 @@ class_name SkillStackOverflow extends RigidBody2D
 var _is_activated : bool = false
 
 func activate_skill(direction : float):
+	if _is_activated:
+		return
+	
 	var custom_direction = -1 if direction < 0 else 1
 	force_velocity = force_velocity * custom_direction
 	

@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=3 uid="uid://cyukwhicn3uen"]
+
+[ext_resource type="Script" path="res://entities/enemy/scripts/enemy_jumper.gd" id="1_d3c4y"]
+[ext_resource type="Texture2D" uid="uid://cfb75d7v0x3ut" path="res://entities/enemy/media/GrassHopper.png" id="2_fb51s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hnlgu"]
+size = Vector2(10, 15)
+
+[node name="EnemyJumper" type="CharacterBody2D" node_paths=PackedStringArray("jump_wait_timer", "recovery_timer", "view_direction_ray", "enemy_sprite", "flip_timer")]
+collision_layer = 4
+collision_mask = 27
+script = ExtResource("1_d3c4y")
+jump_velocity = Vector2(100, -450)
+jump_wait_timer = NodePath("JumpTimer")
+recovery_timer = NodePath("RecoveryTimer")
+time_to_recovery = 10.0
+view_direction_ray = NodePath("ViewDirectionRay")
+enemy_view_direction = -1
+enemy_sprite = NodePath("Sprite2D")
+flip_timer = NodePath("FlipTimer")
+
+[node name="JumpTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="RecoveryTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="FlipTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = ExtResource("2_fb51s")
+flip_h = true
+hframes = 6
+region_rect = Rect2(156, 26, 24, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_hnlgu")
+
+[node name="ViewDirectionRay" type="RayCast2D" parent="."]
+position = Vector2(0, -8)
+target_position = Vector2(-20, 0)
+collision_mask = 9
