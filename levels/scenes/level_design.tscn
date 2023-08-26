@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dqlj4wgfpg06v"]
+[gd_scene load_steps=16 format=3 uid="uid://dqlj4wgfpg06v"]
 
 [ext_resource type="Texture2D" uid="uid://gwxmg1x07wm0" path="res://levels/media/MIZA SERVER.png" id="1_fr6tl"]
 [ext_resource type="Texture2D" uid="uid://dwdtfu4k78owt" path="res://levels/media/MIZA CAVE.png" id="2_pckbx"]
@@ -7,8 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://c541eexhog3da" path="res://entities/player/resources/player_system.tscn" id="3_tij0g"]
 [ext_resource type="Texture2D" uid="uid://b7xfrpy7sp8kh" path="res://levels/media/patternFX.png" id="4_lmr4u"]
 [ext_resource type="Texture2D" uid="uid://ban3ysukgcnju" path="res://levels/media/deco.png" id="5_oyimb"]
-[ext_resource type="Texture2D" uid="uid://bbe4hdnoq31om" path="res://entities/player/media/characters.png" id="6_jcdos"]
 [ext_resource type="PackedScene" uid="uid://bo8x0a85lcrym" path="res://services/audio/resources/sound_system.tscn" id="9_wa8qi"]
+[ext_resource type="PackedScene" uid="uid://cyukwhicn3uen" path="res://entities/enemy/resources/enemy_jumper.tscn" id="9_ydrgi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wwcys"]
 texture = ExtResource("1_fr6tl")
@@ -1601,9 +1601,6 @@ sources/4 = SubResource("TileSetAtlasSource_scncv")
 sources/6 = SubResource("TileSetAtlasSource_kb0pv")
 sources/8 = SubResource("TileSetAtlasSource_1irfk")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hnlgu"]
-size = Vector2(10, 15)
-
 [node name="Level0" type="Node2D"]
 position = Vector2(1, 0)
 
@@ -1656,23 +1653,20 @@ follow_speed = 1000.0
 [node name="Camera2D" parent="CameraSystem" index="0"]
 zoom = Vector2(4, 4)
 
-[node name="EnemyJumper" type="RigidBody2D" parent="."]
-position = Vector2(341, 8)
-collision_layer = 4
-collision_mask = 19
-
-[node name="Sprite2D" type="Sprite2D" parent="EnemyJumper"]
-texture = ExtResource("6_jcdos")
-region_enabled = true
-region_rect = Rect2(156, 26, 24, 24)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyJumper"]
-position = Vector2(0, 4)
-shape = SubResource("RectangleShape2D_hnlgu")
-
 [node name="PlayerSystem" parent="." instance=ExtResource("3_tij0g")]
 position = Vector2(-11, 22)
 
 [node name="SoundSystem" parent="." instance=ExtResource("9_wa8qi")]
+
+[node name="EnemyJumper2" parent="." instance=ExtResource("9_ydrgi")]
+position = Vector2(2039, 239)
+
+[node name="EnemyJumper3" parent="." node_paths=PackedStringArray("jump_wait_timer", "recovery_timer", "view_direction_ray", "enemy_sprite", "flip_timer") instance=ExtResource("9_ydrgi")]
+position = Vector2(2061, 222)
+jump_wait_timer = NodePath("../EnemyJumper2/JumpTimer")
+recovery_timer = NodePath("../EnemyJumper2/RecoveryTimer")
+view_direction_ray = NodePath("../EnemyJumper2/ViewDirectionRay")
+enemy_sprite = NodePath("../EnemyJumper2/Sprite2D")
+flip_timer = NodePath("../EnemyJumper2/FlipTimer")
 
 [editable path="CameraSystem"]
