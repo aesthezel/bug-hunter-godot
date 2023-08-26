@@ -1,0 +1,96 @@
+[gd_scene load_steps=10 format=3 uid="uid://df5b1e5d8sj08"]
+
+[ext_resource type="Shader" path="res://services/screen/scripts/shaders/main_screen_shader.gdshader" id="1_57tjw"]
+[ext_resource type="Script" path="res://services/screen/scripts/main_screen.gd" id="1_xggfq"]
+[ext_resource type="Texture2D" uid="uid://dgtkf88n7vb4u" path="res://services/screen/media/patron_fondo.png" id="2_wm8x8"]
+[ext_resource type="Texture2D" uid="uid://qbgyd3dgb0un" path="res://services/screen/media/bug_hunter_logo.png" id="3_psamq"]
+[ext_resource type="FontFile" uid="uid://ct8ox4y76m274" path="res://services/ui/media/joystix_monospace.otf" id="4_5kdtp"]
+[ext_resource type="AudioStream" uid="uid://ccqvwgvft3gkm" path="res://services/audio/media/bgm/screen-title.mp3" id="6_b13s2"]
+[ext_resource type="AudioStream" uid="uid://dgfn88kr6o8ie" path="res://services/audio/media/sfx/mixkit-arcade-bonus-alert-767.wav" id="7_6lh8f"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ntx8r"]
+shader = ExtResource("1_57tjw")
+shader_parameter/scroll_speed_x = 0.1
+shader_parameter/scroll_speed_y = 0.1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uudwk"]
+bg_color = Color(0.231373, 0.364706, 0.784314, 0.862745)
+
+[node name="main_menu" type="Control" node_paths=PackedStringArray("timer_to_change_scene")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xggfq")
+timer_to_change_scene = NodePath("Timer")
+
+[node name="Parallax" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_ntx8r")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_wm8x8")
+stretch_mode = 1
+
+[node name="Logo" type="TextureRect" parent="Parallax"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -5.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_psamq")
+
+[node name="Panel" type="Panel" parent="Parallax"]
+custom_minimum_size = Vector2(120, 20)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -38.0
+offset_right = 60.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_uudwk")
+
+[node name="Label" type="Label" parent="Parallax/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -54.0
+offset_top = -9.0
+offset_right = 54.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_5kdtp")
+theme_override_font_sizes/font_size = 10
+text = "PRESS START"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="BGM" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_b13s2")
+autoplay = true
+bus = &"Music"
+
+[node name="Start" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_6lh8f")
+bus = &"SFX"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(112, 64)
+zoom = Vector2(5.7, 5.7)

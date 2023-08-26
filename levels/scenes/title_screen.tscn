@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bld706387ucpx"]
+[gd_scene load_steps=5 format=3 uid="uid://bld706387ucpx"]
 
 [ext_resource type="VideoStream" path="res://services/screen/media/INTROFINAL_1.ogv" id="1_7n1b5"]
 [ext_resource type="Script" path="res://services/screen/scripts/intro_game.gd" id="1_vqnu7"]
 [ext_resource type="AudioStream" uid="uid://bt46votyv446i" path="res://services/audio/media/bgm/story-introduction.mp3" id="2_enntp"]
+[ext_resource type="PackedScene" uid="uid://df5b1e5d8sj08" path="res://levels/scenes/main_menu.tscn" id="2_pq4gj"]
 
 [node name="title_screen" type="Control" node_paths=PackedStringArray("video_player")]
 layout_mode = 3
@@ -12,6 +13,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_vqnu7")
+scene_to_change = ExtResource("2_pq4gj")
 video_player = NodePath("VideoStreamPlayer")
 
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
