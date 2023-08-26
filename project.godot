@@ -15,6 +15,10 @@ run/main_scene="res://levels/scenes/level_0.tscn"
 config/features=PackedStringArray("4.1", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GameEvents="*res://global/scripts/game_events.gd"
+
 [display]
 
 window/size/viewport_width=1920

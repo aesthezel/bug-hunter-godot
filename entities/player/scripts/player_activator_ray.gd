@@ -20,11 +20,12 @@ func checking_stack_overflow(collider):
 
 func checking_enemy(collider):
 	var enemy = collider as Enemy
-	
-	print(enemy)
 	if enemy != null:
-		var complete_enemy = enemy.get_exact_type(enemy)
-		complete_enemy.set_life(-1)
+		enemy.set_life(-1)
+		if enemy.get_current_life() == 0:
+			GameEvents.play_sound.emit("scanner")
+			GameEvents.on_scan.emit(1, enemy.get_string_type())
+			enemy.scanned()
 
 func _ready():
 	sleep_timer.timeout.connect(wake_ray)

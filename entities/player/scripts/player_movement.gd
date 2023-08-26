@@ -13,9 +13,14 @@ func perform_gravity(delta):
 	if not is_on_floor():
 		velocity.y += gravity * delta
 
+func perform_hit():
+	velocity.y = -100
+	move_and_slide()
+
 func perform_jump():
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_velocity
+		GameEvents.play_sound.emit("jump")
 
 func perform_move():
 	var direction = Input.get_axis("move_left", "move_right")

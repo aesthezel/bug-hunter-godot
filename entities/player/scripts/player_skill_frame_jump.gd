@@ -11,6 +11,7 @@ enum FrameJumpDirection {
 	NEUTRAL = 0
 }
 
+@export var player_system : PlayerSystem
 @export var ray_type : FrameJumpType
 @export var player_transform : Node2D
 @export var player_collider : CollisionShape2D
@@ -69,6 +70,9 @@ func _process(delta):
 	
 	if !can_use:
 		return
+	
+	if player_system.frame_jump == 0:
+		return
 		
 	if Input.is_action_just_pressed("skill_two") and can_cross:
 		if ray_type == FrameJumpType.HORIZONTAL and Input.get_axis("move_left", "move_right") != 0:
@@ -78,3 +82,4 @@ func _process(delta):
 		
 		can_use = false
 		frame_jump_timer.start(can_use_time)
+		player_system.update_stats_by_use(-1, "FrameJump")

@@ -15,6 +15,8 @@ func activate_skill(direction : float):
 	
 	force_timer.start(skill_time)
 	_is_activated = true
+	
+	GameEvents.play_sound.emit("stack_launch")
 
 func disable_skill():
 	_is_activated = false

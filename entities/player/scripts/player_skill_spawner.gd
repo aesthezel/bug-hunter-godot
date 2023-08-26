@@ -1,5 +1,6 @@
 class_name PlayerSkillSpawner extends Node2D
 
+@export var player_system : PlayerSystem
 @export var instance_offset : Vector2 = Vector2.ZERO
 @export var activator_ray : PlayerActivatorRay
 @export var skill_stack_overflow_packed : PackedScene
@@ -24,6 +25,9 @@ func _process(delta):
 	if Input.is_action_just_pressed("move_right"):
 		instance_offset.x = abs(instance_offset.x)
 	
+	if player_system.stack_overflow == 0:
+		return
+	
 	if _can_input:
 		if Input.is_action_just_pressed("skill_one") and !activator_ray.is_colliding():
 			disable_input(input_disabled_time)
@@ -32,3 +36,4 @@ func _process(delta):
 			var skill = skill_stack_overflow_packed.instantiate() as SkillStackOverflow
 			owner.add_child(skill)
 			skill.global_position = global_position + instance_offset
+			player_system.update_stats_by_use(-1, "StackOverflow")
