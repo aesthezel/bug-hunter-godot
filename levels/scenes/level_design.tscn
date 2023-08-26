@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://conbyq11l4ybv"]
+[gd_scene load_steps=17 format=3 uid="uid://dqlj4wgfpg06v"]
 
 [ext_resource type="Texture2D" uid="uid://gwxmg1x07wm0" path="res://levels/media/MIZA SERVER.png" id="1_fr6tl"]
 [ext_resource type="Texture2D" uid="uid://dwdtfu4k78owt" path="res://levels/media/MIZA CAVE.png" id="2_pckbx"]
@@ -6,9 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://jod8kosoqoye" path="res://levels/media/GRASSLAND.png" id="3_kh82l"]
 [ext_resource type="PackedScene" uid="uid://c541eexhog3da" path="res://entities/player/resources/player_system.tscn" id="3_tij0g"]
 [ext_resource type="Texture2D" uid="uid://b7xfrpy7sp8kh" path="res://levels/media/patternFX.png" id="4_lmr4u"]
-[ext_resource type="Script" path="res://entities/player/scripts/player_skill_frame_jump.gd" id="4_rf2nq"]
 [ext_resource type="Texture2D" uid="uid://ban3ysukgcnju" path="res://levels/media/deco.png" id="5_oyimb"]
 [ext_resource type="Texture2D" uid="uid://bbe4hdnoq31om" path="res://entities/player/media/characters.png" id="6_jcdos"]
+[ext_resource type="PackedScene" uid="uid://bo8x0a85lcrym" path="res://services/audio/resources/sound_system.tscn" id="9_wa8qi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wwcys"]
 texture = ExtResource("1_fr6tl")
@@ -1648,38 +1648,13 @@ layer_5/y_sort_origin = 0
 layer_5/z_index = 0
 layer_5/tile_data = PackedInt32Array()
 
-[node name="CameraSystem" parent="." node_paths=PackedStringArray("camera", "target") instance=ExtResource("2_y5x2r")]
+[node name="CameraSystem" parent="." node_paths=PackedStringArray("camera", "player_system") instance=ExtResource("2_y5x2r")]
 camera = NodePath("Camera2D")
-target = NodePath("../PlayerSystem/Player")
+player_system = NodePath("../PlayerSystem")
 follow_speed = 1000.0
 
 [node name="Camera2D" parent="CameraSystem" index="0"]
 zoom = Vector2(4, 4)
-
-[node name="PlayerSystem" parent="." instance=ExtResource("3_tij0g")]
-position = Vector2(-48, 0)
-
-[node name="Player" parent="PlayerSystem" index="0"]
-scale = Vector2(1.5, 1.5)
-
-[node name="PlayerSkillSpawner" parent="PlayerSystem/Player" index="2"]
-instance_offset = Vector2(10, 0)
-
-[node name="ActivatorRay" parent="PlayerSystem/Player" index="3"]
-collision_mask = 16
-
-[node name="FrameJumpHorizontal" type="RayCast2D" parent="PlayerSystem/Player" index="4" node_paths=PackedStringArray("player_transform", "player_collider")]
-target_position = Vector2(50, 0)
-script = ExtResource("4_rf2nq")
-player_transform = NodePath("..")
-player_collider = NodePath("../CollisionShape2D")
-
-[node name="FrameJumpVertical" type="RayCast2D" parent="PlayerSystem/Player" index="5" node_paths=PackedStringArray("player_transform", "player_collider")]
-target_position = Vector2(0, -50)
-script = ExtResource("4_rf2nq")
-ray_type = 1
-player_transform = NodePath("..")
-player_collider = NodePath("../CollisionShape2D")
 
 [node name="EnemyJumper" type="RigidBody2D" parent="."]
 position = Vector2(341, 8)
@@ -1695,5 +1670,9 @@ region_rect = Rect2(156, 26, 24, 24)
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_hnlgu")
 
+[node name="PlayerSystem" parent="." instance=ExtResource("3_tij0g")]
+position = Vector2(-11, 22)
+
+[node name="SoundSystem" parent="." instance=ExtResource("9_wa8qi")]
+
 [editable path="CameraSystem"]
-[editable path="PlayerSystem"]

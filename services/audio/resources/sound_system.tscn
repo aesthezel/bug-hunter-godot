@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://bo8x0a85lcrym"]
+
+[ext_resource type="Script" path="res://services/audio/scripts/audio_system.gd" id="1_xvpyj"]
+[ext_resource type="AudioStream" uid="uid://c83t8eyx5i8ep" path="res://services/audio/media/bgm/go-bug-hunter.mp3" id="2_jnty1"]
+[ext_resource type="AudioStream" uid="uid://deylh2m0ldrso" path="res://services/audio/media/sfx/mixkit-data-scaner-2847.wav" id="3_8d5rf"]
+[ext_resource type="AudioStream" uid="uid://ijgoipfxy6bm" path="res://services/audio/media/sfx/mixkit-arcade-retro-game-over-213.wav" id="4_l8lds"]
+[ext_resource type="AudioStream" uid="uid://1peo56pdx30o" path="res://services/audio/media/sfx/mixkit-quick-jump-arcade-game-239.wav" id="5_tapmx"]
+[ext_resource type="AudioStream" uid="uid://c3bjttwoi0s4l" path="res://services/audio/media/sfx/mixkit-electronic-retro-block-hit-2185.wav" id="6_c3tf3"]
+
+[node name="SoundSystem" type="Node" node_paths=PackedStringArray("bgm_sound", "scanner_sound", "game_over_sound", "jump_sound", "stack_over_flow_launch_sound")]
+script = ExtResource("1_xvpyj")
+bgm_sound = NodePath("BGM")
+scanner_sound = NodePath("Scanner")
+game_over_sound = NodePath("GameOver")
+jump_sound = NodePath("Jump")
+stack_over_flow_launch_sound = NodePath("StackOver")
+
+[node name="BGM" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_jnty1")
+autoplay = true
+bus = &"Music"
+
+[node name="Scanner" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_8d5rf")
+bus = &"SFX"
+
+[node name="GameOver" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_l8lds")
+bus = &"SFX"
+
+[node name="Jump" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_tapmx")
+bus = &"SFX"
+
+[node name="StackOver" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_c3tf3")
+bus = &"SFX"

@@ -14,9 +14,9 @@ class_name PlayerSystem extends Node2D
 @export var max_stack_overflow : int
 @export var max_frame_jump : int
 
-var life : int
-var stack_overflow : int
-var frame_jump : int
+var life : int = 0
+var stack_overflow : int = 0
+var frame_jump : int = 0
 
 func update_stats_by_enemy(quantity : int, enemy_type : String):
 	match(enemy_type):

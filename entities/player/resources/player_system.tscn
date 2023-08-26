@@ -1,17 +1,18 @@
-[gd_scene load_steps=14 format=3 uid="uid://c541eexhog3da"]
+[gd_scene load_steps=17 format=3 uid="uid://c541eexhog3da"]
 
 [ext_resource type="Script" path="res://entities/player/scripts/player_system.gd" id="1_4hiuk"]
 [ext_resource type="Script" path="res://entities/player/scripts/player_movement.gd" id="1_j4ciu"]
+[ext_resource type="Texture2D" uid="uid://bmujtvbhuk37e" path="res://entities/player/media/Player_Red_Idle.png" id="2_vjpuy"]
 [ext_resource type="Script" path="res://entities/player/scripts/player_activator_ray.gd" id="3_gm1s0"]
 [ext_resource type="Script" path="res://entities/player/scripts/player_skill_spawner.gd" id="3_pfkxu"]
 [ext_resource type="Texture2D" uid="uid://c7s70cqrcdwyo" path="res://entities/player/media/Player_White_Idle.png" id="3_s3ahb"]
+[ext_resource type="Texture2D" uid="uid://mx5sx44qshv" path="res://entities/player/media/Player_Blue_Idle.png" id="3_tp80g"]
 [ext_resource type="Texture2D" uid="uid://dcotchcdbopee" path="res://entities/player/media/Player_White_Attack.png" id="4_owdjp"]
 [ext_resource type="PackedScene" uid="uid://d2uvd6a0uhmos" path="res://entities/player/resources/skill_stack_overflow.tscn" id="4_p1v6j"]
 [ext_resource type="Script" path="res://entities/player/scripts/player_skill_frame_jump.gd" id="6_8ns43"]
 
-[sub_resource type="Animation" id="Animation_6ray3"]
-resource_name = "idle"
-length = 0.60001
+[sub_resource type="Animation" id="Animation_6x2fn"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -19,10 +20,10 @@ tracks/0/path = NodePath("Player/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5]
+"values": [0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -49,8 +50,9 @@ tracks/2/keys = {
 "values": [6]
 }
 
-[sub_resource type="Animation" id="Animation_6x2fn"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_6ray3"]
+resource_name = "idle"
+length = 0.60001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -58,10 +60,10 @@ tracks/0/path = NodePath("Player/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0]
+"values": [0, 1, 2, 3, 4, 5]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -139,11 +141,22 @@ _data = {
 radius = 6.0
 height = 14.0
 
-[node name="PlayerSystem" type="Node2D" node_paths=PackedStringArray("player_movement", "player_activator_ray", "player_animator")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xp0kw"]
+size = Vector2(14, 15)
+
+[node name="PlayerSystem" type="Node2D" node_paths=PackedStringArray("player_movement", "player_activator_ray", "player_animator", "player_collision", "player_sprite", "timer_to_change")]
 script = ExtResource("1_4hiuk")
 player_movement = NodePath("Player")
 player_activator_ray = NodePath("Player/ActivatorRay")
 player_animator = NodePath("Player/AnimationPlayer")
+player_collision = NodePath("Player/Area2D")
+stack_overflow_texture = ExtResource("2_vjpuy")
+frame_jump_texture = ExtResource("3_tp80g")
+player_sprite = NodePath("Player/Sprite2D")
+timer_to_change = NodePath("TimeToChange")
+starting_life = 3
+max_stack_overflow = 6
+max_frame_jump = 3
 
 [node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("player_system", "sprite")]
 collision_layer = 2
@@ -169,8 +182,17 @@ libraries = {
 shape = SubResource("CapsuleShape2D_bfc74")
 debug_color = Color(1, 0, 1, 0.392157)
 
-[node name="PlayerSkillSpawner" type="Node2D" parent="Player" node_paths=PackedStringArray("activator_ray", "input_timer")]
+[node name="Area2D" type="Area2D" parent="Player"]
+collision_layer = 2
+collision_mask = 21
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Area2D"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_xp0kw")
+
+[node name="PlayerSkillSpawner" type="Node2D" parent="Player" node_paths=PackedStringArray("player_system", "activator_ray", "input_timer")]
 script = ExtResource("3_pfkxu")
+player_system = NodePath("../..")
 instance_offset = Vector2(10, 0)
 activator_ray = NodePath("../ActivatorRay")
 skill_stack_overflow_packed = ExtResource("4_p1v6j")
@@ -189,19 +211,21 @@ sleep_timer = NodePath("Timer")
 [node name="Timer" type="Timer" parent="Player/ActivatorRay"]
 one_shot = true
 
-[node name="FrameJumpHorizontal" type="RayCast2D" parent="." node_paths=PackedStringArray("player_transform", "player_collider", "frame_jump_timer")]
+[node name="FrameJumpHorizontal" type="RayCast2D" parent="." node_paths=PackedStringArray("player_system", "player_transform", "player_collider", "frame_jump_timer")]
 target_position = Vector2(50, 0)
 collision_mask = 21
 script = ExtResource("6_8ns43")
+player_system = NodePath("..")
 player_transform = NodePath("../Player")
 player_collider = NodePath("../Player/CollisionShape2D")
 frame_jump_timer = NodePath("../FrameJumpTimer")
 can_use_time = 0.5
 
-[node name="FrameJumpVertical" type="RayCast2D" parent="." node_paths=PackedStringArray("player_transform", "player_collider", "frame_jump_timer")]
+[node name="FrameJumpVertical" type="RayCast2D" parent="." node_paths=PackedStringArray("player_system", "player_transform", "player_collider", "frame_jump_timer")]
 target_position = Vector2(0, -50)
 collision_mask = 21
 script = ExtResource("6_8ns43")
+player_system = NodePath("..")
 ray_type = 1
 player_transform = NodePath("../Player")
 player_collider = NodePath("../Player/CollisionShape2D")
@@ -210,3 +234,5 @@ can_use_time = 0.5
 
 [node name="FrameJumpTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="TimeToChange" type="Timer" parent="."]
