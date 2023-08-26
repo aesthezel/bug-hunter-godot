@@ -1,0 +1,80 @@
+[gd_scene load_steps=10 format=3 uid="uid://wvop4yn0epqh"]
+
+[ext_resource type="Shader" path="res://services/screen/scripts/shaders/main_screen_shader.gdshader" id="1_l3ps7"]
+[ext_resource type="Script" path="res://services/screen/scripts/control_screen.gd" id="1_pcwst"]
+[ext_resource type="Texture2D" uid="uid://dgtkf88n7vb4u" path="res://services/screen/media/patron_fondo.png" id="2_aeir7"]
+[ext_resource type="PackedScene" uid="uid://dqlj4wgfpg06v" path="res://levels/scenes/level_design.tscn" id="2_uu2b7"]
+[ext_resource type="Texture2D" uid="uid://bf122wfwdql4l" path="res://services/screen/media/controlFinal.png" id="3_agm8v"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mjewc"]
+shader = ExtResource("1_l3ps7")
+shader_parameter/scroll_speed_x = 0.1
+shader_parameter/scroll_speed_y = 0.1
+
+[sub_resource type="Animation" id="Animation_rjxh8"]
+resource_name = "control"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_a3eja"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k0ene"]
+_data = {
+"RESET": SubResource("Animation_a3eja"),
+"control": SubResource("Animation_rjxh8")
+}
+
+[node name="control_scene" type="Control" node_paths=PackedStringArray("animation_player", "timer_to_change")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pcwst")
+animation_player = NodePath("Parallax/AnimationPlayer")
+scene_to_change = ExtResource("2_uu2b7")
+timer_to_change = NodePath("Timer")
+
+[node name="Parallax" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_mjewc")
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_aeir7")
+stretch_mode = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax"]
+position = Vector2(111, 64)
+texture = ExtResource("3_agm8v")
+hframes = 8
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Parallax"]
+libraries = {
+"": SubResource("AnimationLibrary_k0ene")
+}
+
+[node name="Timer" type="Timer" parent="."]
