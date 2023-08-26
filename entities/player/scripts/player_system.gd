@@ -54,7 +54,7 @@ func damage(body : Node2D):
 		update_life(-1)
 		
 func change_scene():
-	get_tree().root.add_child(scene_to_change.instantiate())
+	get_tree().change_scene_to_packed(scene_to_change)
 	get_tree().unload_current_scene()
 
 func _ready():

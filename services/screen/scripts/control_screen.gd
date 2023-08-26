@@ -6,7 +6,7 @@ class_name ControlScreen
 @export var timer_to_change : Timer
 
 func change_scene():
-	get_tree().root.add_child(scene_to_change.instantiate())
+	get_tree().change_scene_to_packed(scene_to_change)
 	get_tree().unload_current_scene()
 
 # Called when the node enters the scene tree for the first time.
