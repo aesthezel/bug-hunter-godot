@@ -15,8 +15,8 @@ class_name PlayerSystem extends Node2D
 @export var max_frame_jump : int
 
 var life : int = 0
-var stack_overflow : int = 0
-var frame_jump : int = 0
+var stack_overflow : int = 999
+var frame_jump : int = 999
 
 func update_stats_by_enemy(quantity : int, enemy_type : String):
 	match(enemy_type):
@@ -54,7 +54,7 @@ func damage(body : Node2D):
 		update_life(-1)
 		
 func change_scene():
-	get_tree().change_scene_to_packed(scene_to_change)
+	get_tree().root.add_child(scene_to_change.instantiate())
 	get_tree().unload_current_scene()
 
 func _ready():

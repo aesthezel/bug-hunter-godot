@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dqlj4wgfpg06v"]
+[gd_scene load_steps=17 format=3 uid="uid://dqlj4wgfpg06v"]
 
 [ext_resource type="Texture2D" uid="uid://gwxmg1x07wm0" path="res://levels/media/MIZA SERVER.png" id="1_fr6tl"]
 [ext_resource type="Texture2D" uid="uid://dwdtfu4k78owt" path="res://levels/media/MIZA CAVE.png" id="2_pckbx"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c541eexhog3da" path="res://entities/player/resources/player_system.tscn" id="3_tij0g"]
 [ext_resource type="Texture2D" uid="uid://b7xfrpy7sp8kh" path="res://levels/media/patternFX.png" id="4_lmr4u"]
 [ext_resource type="Texture2D" uid="uid://ban3ysukgcnju" path="res://levels/media/deco.png" id="5_oyimb"]
+[ext_resource type="PackedScene" uid="uid://df5b1e5d8sj08" path="res://levels/scenes/main_menu.tscn" id="8_506hv"]
 [ext_resource type="PackedScene" uid="uid://bo8x0a85lcrym" path="res://services/audio/resources/sound_system.tscn" id="9_wa8qi"]
 [ext_resource type="PackedScene" uid="uid://cyukwhicn3uen" path="res://entities/enemy/resources/enemy_jumper.tscn" id="9_ydrgi"]
 
@@ -1655,6 +1656,7 @@ zoom = Vector2(4, 4)
 
 [node name="PlayerSystem" parent="." instance=ExtResource("3_tij0g")]
 position = Vector2(-11, 22)
+scene_to_change = ExtResource("8_506hv")
 
 [node name="SoundSystem" parent="." instance=ExtResource("9_wa8qi")]
 

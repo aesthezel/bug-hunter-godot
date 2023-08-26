@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c541eexhog3da"]
+[gd_scene load_steps=18 format=3 uid="uid://c541eexhog3da"]
 
 [ext_resource type="Script" path="res://entities/player/scripts/player_system.gd" id="1_4hiuk"]
 [ext_resource type="Script" path="res://entities/player/scripts/player_movement.gd" id="1_j4ciu"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://entities/player/scripts/player_skill_spawner.gd" id="3_pfkxu"]
 [ext_resource type="Texture2D" uid="uid://c7s70cqrcdwyo" path="res://entities/player/media/Player_White_Idle.png" id="3_s3ahb"]
 [ext_resource type="Texture2D" uid="uid://mx5sx44qshv" path="res://entities/player/media/Player_Blue_Idle.png" id="3_tp80g"]
+[ext_resource type="PackedScene" uid="uid://df5b1e5d8sj08" path="res://levels/scenes/main_menu.tscn" id="4_78o4s"]
 [ext_resource type="Texture2D" uid="uid://dcotchcdbopee" path="res://entities/player/media/Player_White_Attack.png" id="4_owdjp"]
 [ext_resource type="PackedScene" uid="uid://d2uvd6a0uhmos" path="res://entities/player/resources/skill_stack_overflow.tscn" id="4_p1v6j"]
 [ext_resource type="Script" path="res://entities/player/scripts/player_skill_frame_jump.gd" id="6_8ns43"]
@@ -153,6 +154,7 @@ player_collision = NodePath("Player/Area2D")
 stack_overflow_texture = ExtResource("2_vjpuy")
 frame_jump_texture = ExtResource("3_tp80g")
 player_sprite = NodePath("Player/Sprite2D")
+scene_to_change = ExtResource("4_78o4s")
 timer_to_change = NodePath("TimeToChange")
 starting_life = 3
 max_stack_overflow = 6
