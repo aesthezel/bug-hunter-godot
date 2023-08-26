@@ -79,3 +79,7 @@ libraries = {
 }
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(112, 64)
+zoom = Vector2(5.7, 5.7)

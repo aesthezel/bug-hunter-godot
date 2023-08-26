@@ -238,3 +238,4 @@ can_use_time = 0.5
 one_shot = true
 
 [node name="TimeToChange" type="Timer" parent="."]
+one_shot = true

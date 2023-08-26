@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://df5b1e5d8sj08"]
+[gd_scene load_steps=11 format=3 uid="uid://df5b1e5d8sj08"]
 
 [ext_resource type="Shader" path="res://services/screen/scripts/shaders/main_screen_shader.gdshader" id="1_57tjw"]
 [ext_resource type="Script" path="res://services/screen/scripts/main_screen.gd" id="1_xggfq"]
+[ext_resource type="PackedScene" uid="uid://wvop4yn0epqh" path="res://levels/scenes/control_scene.tscn" id="2_tiw5b"]
 [ext_resource type="Texture2D" uid="uid://dgtkf88n7vb4u" path="res://services/screen/media/patron_fondo.png" id="2_wm8x8"]
 [ext_resource type="Texture2D" uid="uid://qbgyd3dgb0un" path="res://services/screen/media/bug_hunter_logo.png" id="3_psamq"]
 [ext_resource type="FontFile" uid="uid://ct8ox4y76m274" path="res://services/ui/media/joystix_monospace.otf" id="4_5kdtp"]
@@ -16,7 +17,7 @@ shader_parameter/scroll_speed_y = 0.1
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uudwk"]
 bg_color = Color(0.231373, 0.364706, 0.784314, 0.862745)
 
-[node name="main_menu" type="Control" node_paths=PackedStringArray("timer_to_change_scene")]
+[node name="main_menu" type="Control" node_paths=PackedStringArray("press_start_sound", "timer_to_change_scene")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,6 +25,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xggfq")
+scene_to_change = ExtResource("2_tiw5b")
+press_start_sound = NodePath("Start")
 timer_to_change_scene = NodePath("Timer")
 
 [node name="Parallax" type="TextureRect" parent="."]
